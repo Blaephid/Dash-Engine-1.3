@@ -25,7 +25,7 @@
 		},
 		{
 			"Name": "SoundVisualizations",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "Composure",
@@ -77,7 +77,7 @@
 		},
 		{
 			"Name": "NiagaraExtras",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "ActorSequence",
@@ -97,7 +97,7 @@
 		},
 		{
 			"Name": "MeshEditor",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "OptionalMobileFeaturesBPLibrary",
