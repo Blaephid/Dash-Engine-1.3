@@ -8,7 +8,7 @@ public class DashEngineTarget : TargetRules
 	public DashEngineTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
-        bIWYU = true;
+		DefaultBuildSettings = BuildSettingsVersion.V5;
         ExtraModuleNames.AddRange( new string[] { "DashEngine" } );
 	}
 }
