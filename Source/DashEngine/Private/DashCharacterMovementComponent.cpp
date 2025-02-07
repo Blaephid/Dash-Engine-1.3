@@ -1796,7 +1796,7 @@ bool UDashCharacterMovementComponent::CheckLedgeDirection(const FVector& OldLoca
 	{
 		if (!Result.bBlockingHit)
 		{
-			GetWorld()->SweepSingleByChannel(Result, SideDest, SideDest + GravDir * (MaxStepHeight + LedgeCheckThreshold), PawnRotation, CollisionChannel, CapsuleShape, CapsuleParams, ResponseParam);
+			GetWorld()->SweepSingleByChannel(Result, SideDest, SideDest + GetGravityDirection() * (MaxStepHeight + LedgeCheckThreshold), PawnRotation, CollisionChannel, CapsuleShape, CapsuleParams, ResponseParam);
 		}
 
 		if (Result.Time < 1.0f && IsWalkable(Result))
@@ -1815,10 +1815,10 @@ FVector UDashCharacterMovementComponent::GetLedgeMove(const FVector& OldLocation
 		return FVector::ZeroVector;
 	}
 
-	FVector SideDir = FVector::VectorPlaneProject(Delta, GravDir);
+	FVector SideDir = FVector::VectorPlaneProject(Delta, GetGravityDirection());
 
 	// Try left.
-	SideDir = FQuat(GravDir, PI * 0.5f).RotateVector(SideDir);
+	SideDir = FQuat(GetGravityDirection(), PI * 0.5f).RotateVector(SideDir);
 	if (CheckLedgeDirection(OldLocation, SideDir, OldFloor))
 	{
 		return SideDir;
