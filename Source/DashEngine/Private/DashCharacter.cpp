@@ -38,8 +38,8 @@ void ADashCharacter::ApplyDamageMomentum(float DamageTaken, const FDamageEvent& 
 	const UDamageType* DmgTypeCDO = DamageEvent.DamageTypeClass->GetDefaultObject<UDamageType>();
 	const float ImpulseScale = DmgTypeCDO->DamageImpulse;
 	
-	UCharacterMovementComponent* CharacterMovement = GetCharacterMovement();
-	if (ImpulseScale > 3.0f && CharacterMovement != NULL)
+	UCharacterMovementComponent* CharacterMovementComponent = GetCharacterMovement();
+	if (ImpulseScale > 3.0f && CharacterMovementComponent != NULL)
 	{
 		FHitResult HitInfo;
 		FVector ImpulseDir;
@@ -51,19 +51,19 @@ void ADashCharacter::ApplyDamageMomentum(float DamageTaken, const FDamageEvent& 
 		// Limit Z momentum added if already going up faster than jump (to avoid blowing character way up into the sky).
 		{
 			FVector MassScaledImpulse = Impulse;
-			if (!bMassIndependentImpulse && CharacterMovement->Mass > SMALL_NUMBER)
+			if (!bMassIndependentImpulse && CharacterMovementComponent->Mass > SMALL_NUMBER)
 			{
-				MassScaledImpulse = MassScaledImpulse / CharacterMovement->Mass;
+				MassScaledImpulse = MassScaledImpulse / CharacterMovementComponent->Mass;
 			}
 
 			const FVector AxisZ = GetActorQuat().GetAxisZ();
-			if ((CharacterMovement->Velocity | AxisZ) > GetDefault<UCharacterMovementComponent>(CharacterMovement->GetClass())->JumpZVelocity && (MassScaledImpulse | AxisZ) > 0.0f)
+			if ((CharacterMovementComponent->Velocity | AxisZ) > GetDefault<UCharacterMovementComponent>(CharacterMovementComponent->GetClass())->JumpZVelocity && (MassScaledImpulse | AxisZ) > 0.0f)
 			{
 				Impulse = FVector::VectorPlaneProject(Impulse, AxisZ) + AxisZ * ((Impulse | AxisZ) * 0.5f);
 			}
 		}
 
-		CharacterMovement->AddImpulse(Impulse, bMassIndependentImpulse);
+		CharacterMovementComponent->AddImpulse(Impulse, bMassIndependentImpulse);
 	}
 }
 
@@ -105,16 +105,16 @@ void ADashCharacter::LaunchCharacterRotated(FVector LaunchVelocity, bool bHorizo
 {
 	UE_LOG(LogCharacter, Verbose, TEXT("ACharacter::LaunchCharacterRotated '%s' %s"), *GetName(), *LaunchVelocity.ToCompactString());
 
-	UCharacterMovementComponent* CharacterMovement = GetCharacterMovement();
-	if (CharacterMovement)
+	UCharacterMovementComponent* CharacterMovementComponent = GetCharacterMovement();
+	if (CharacterMovementComponent)
 	{
 		if (!bHorizontalOverride && !bVerticalOverride)
 		{
-			CharacterMovement->Launch(GetVelocity() + LaunchVelocity);
+			CharacterMovementComponent->Launch(GetVelocity() + LaunchVelocity);
 		}
 		else if (bHorizontalOverride && bVerticalOverride)
 		{
-			CharacterMovement->Launch(LaunchVelocity);
+			CharacterMovementComponent->Launch(LaunchVelocity);
 		}
 		else
 		{
@@ -131,7 +131,7 @@ void ADashCharacter::LaunchCharacterRotated(FVector LaunchVelocity, bool bHorizo
 				FinalVel = FVector::VectorPlaneProject(Velocity, AxisZ) + AxisZ * (LaunchVelocity | AxisZ);
 			}
 
-			CharacterMovement->Launch(FinalVel);
+			CharacterMovementComponent->Launch(FinalVel);
 		}
 
 		OnLaunched(LaunchVelocity, bHorizontalOverride, bVerticalOverride);
