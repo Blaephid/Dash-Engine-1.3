@@ -1,7 +1,7 @@
 #include "QuaternionHandler.h"
 #include "GenericPlatform/GenericPlatformMath.h"
 #include "DashEngine.h"
-#include "Quat.h"
+#include "Math/Quat.h"
 
 
 FRotator UQuaternionHandler::QuatToRotator(FQuat Quaternion)
