@@ -303,14 +303,14 @@ protected:
 
 public:
 	/** @return true if there is a suitable floor SideStep from current position. */
-	virtual bool CheckLedgeDirection(const FVector& OldLocation, const FVector& SideStep, const FVector& GravDir) const override;
+	virtual bool CheckLedgeDirection(const FVector& OldLocation, const FVector& SideStep, const FFindFloorResult& OldFloor) const override;
 
 public:
 	/**
 	* @param Delta is the current move delta (which ended up going over a ledge).
 	* @return new delta which moves along the ledge
 	*/
-	virtual FVector GetLedgeMove(const FVector& OldLocation, const FVector& Delta, const FVector& GravDir) const override;
+	virtual FVector GetLedgeMove(const FVector& OldLocation, const FVector& Delta, const FFindFloorResult& OldFloor) const override;
 
 public:
 	/** Transition from walking to falling */

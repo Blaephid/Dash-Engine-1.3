@@ -1780,7 +1780,7 @@ FVector UDashCharacterMovementComponent::LimitAirControlEx(float DeltaTime, cons
 	return Result;
 }
 
-bool UDashCharacterMovementComponent::CheckLedgeDirection(const FVector& OldLocation, const FVector& SideStep, const FVector& GravDir) const
+bool UDashCharacterMovementComponent::CheckLedgeDirection(const FVector& OldLocation, const FVector& SideStep, const FFindFloorResult& OldFloor) const
 {
 	const FVector SideDest = OldLocation + SideStep;
 	const FQuat PawnRotation = UpdatedComponent->GetComponentQuat();
@@ -1808,7 +1808,7 @@ bool UDashCharacterMovementComponent::CheckLedgeDirection(const FVector& OldLoca
 	return false;
 }
 
-FVector UDashCharacterMovementComponent::GetLedgeMove(const FVector& OldLocation, const FVector& Delta, const FVector& GravDir) const
+FVector UDashCharacterMovementComponent::GetLedgeMove(const FVector& OldLocation, const FVector& Delta, const FFindFloorResult& OldFloor) const
 {
 	if (!HasValidData() || Delta.IsZero())
 	{
@@ -1819,14 +1819,14 @@ FVector UDashCharacterMovementComponent::GetLedgeMove(const FVector& OldLocation
 
 	// Try left.
 	SideDir = FQuat(GravDir, PI * 0.5f).RotateVector(SideDir);
-	if (CheckLedgeDirection(OldLocation, SideDir, GravDir))
+	if (CheckLedgeDirection(OldLocation, SideDir, OldFloor))
 	{
 		return SideDir;
 	}
 
 	// Try right.
 	SideDir *= -1.0f;
-	if (CheckLedgeDirection(OldLocation, SideDir, GravDir))
+	if (CheckLedgeDirection(OldLocation, SideDir, OldFloor))
 	{
 		return SideDir;
 	}
@@ -2099,7 +2099,7 @@ void UDashCharacterMovementComponent::PhysWalking(float deltaTime, int32 Iterati
 		if (bCheckLedges && !CurrentFloor.IsWalkableFloor())
 		{
 			// Calculate possible alternate movement.
-			const FVector NewDelta = bTriedLedgeMove ? FVector::ZeroVector : GetLedgeMove(OldLocation, Delta, GetComponentAxisZ() * -1.0f);
+			const FVector NewDelta = bTriedLedgeMove ? FVector::ZeroVector : GetLedgeMove(OldLocation, Delta, OldFloor);
 			if (!NewDelta.IsZero())
 			{
 				// First revert this move.
