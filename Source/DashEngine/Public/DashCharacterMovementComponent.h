@@ -513,7 +513,7 @@ public:
 	* @param OutStepDownResult	[Out] If non-null, a floor check will be performed if possible as part of the final step down, and it will be updated to reflect this result.
 	* @return true if the step up was successful.
 	*/
-	virtual bool StepUp(const FVector& GravDir, const FVector& Delta, const FHitResult &Hit, struct UCharacterMovementComponent::FStepDownResult* OutStepDownResult = NULL) override;
+	virtual bool StepUp(const FVector& GravDir, const FVector& Delta, const FHitResult &Hit, FStepDownResult* OutStepDownResult = NULL) override;
 
 protected:
 	/** Handle a blocking impact. Calls ApplyImpactPhysicsForces for the hit, if bEnablePhysicsInteraction is true. */
@@ -560,7 +560,7 @@ protected:
 
 public:
 	/** Replicate position correction to client, associated with a timestamped servermove.  Client will replay subsequent moves after applying adjustment. */
-	virtual void ClientAdjustPosition_Implementation(float TimeStamp, FVector NewLoc, FVector NewVel, UPrimitiveComponent* NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode) override;
+	virtual void ClientAdjustPosition_Implementation(float TimeStamp, FVector NewLoc, FVector NewVel, UPrimitiveComponent* NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode, TOptional<FRotator> OptionalRotation = TOptional<FRotator>()) override;
 
 protected:
 	/** Called when the collision capsule touches another primitive component */
@@ -619,7 +619,6 @@ public:
 	* @param bAvoidZeroGravity - If true, zero gravity isn't returned.
 	* @return Normalized direction of current gravity.
 	*/
-	UFUNCTION(Category = "Pawn|Components|DashCharacterMovement", BlueprintCallable)
 		virtual FVector GetGravityDirection(bool bAvoidZeroGravity = false) const;
 
 public:
@@ -638,7 +637,6 @@ public:
 	*
 	* @param NewGravityDirection - New gravity direction, assumes it isn't normalized.
 	*/
-	UFUNCTION(Category = "Pawn|Components|DashCharacterMovement", BlueprintCallable)
 		virtual void SetGravityDirection(const FVector& NewGravityDirection);
 
 protected:
