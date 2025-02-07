@@ -3528,7 +3528,7 @@ void UDashCharacterMovementComponent::ServerMoveHandleClientError(float ClientTi
 	ServerData->bForceClientUpdate = false;
 }
 
-void UDashCharacterMovementComponent::ClientAdjustPosition_Implementation(float TimeStamp, FVector NewLocation, FVector NewVelocity, UPrimitiveComponent* NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode)
+void UDashCharacterMovementComponent::ClientAdjustPosition_Implementation(float TimeStamp, FVector NewLocation, FVector NewVelocity, UPrimitiveComponent* NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, uint8 ServerMovementMode, TOptional<FRotator> OptionalRotation)
 {
 	if (!HasValidData() || !IsComponentTickEnabled())
 	{
