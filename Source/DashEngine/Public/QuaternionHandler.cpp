@@ -1,5 +1,5 @@
 #include "QuaternionHandler.h"
-#include "GenericPlatformMath.h"
+#include "GenericPlatform/GenericPlatformMath.h"
 #include "DashEngine.h"
 #include "Quat.h"
 
