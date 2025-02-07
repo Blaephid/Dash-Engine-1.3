@@ -8,6 +8,7 @@
 
 #include "DashEngine.h"
 #include "DashCharacterMovementComponent.h"
+#include "Engine/DamageEvents.h"
 
 
 DEFINE_LOG_CATEGORY_STATIC(LogCharacter, Log, All);

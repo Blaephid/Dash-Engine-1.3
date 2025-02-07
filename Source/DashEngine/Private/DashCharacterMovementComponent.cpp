@@ -2960,7 +2960,7 @@ bool UDashCharacterMovementComponent::ComputePerchResult(const float TestRadius,
 	return true;
 }
 
-bool UDashCharacterMovementComponent::StepUp(const FVector& GravDir, const FVector& Delta, const FHitResult& InHit, struct UCharacterMovementComponent::FStepDownResult* OutStepDownResult)
+bool UDashCharacterMovementComponent::StepUp(const FVector& GravDir, const FVector& Delta, const FHitResult& InHit, FStepDownResult* OutStepDownResult)
 {
 	SCOPE_CYCLE_COUNTER(STAT_CharStepUp);
 
